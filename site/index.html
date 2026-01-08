@@ -1,57 +1,70 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carregando...</title>
-    <!-- Opcional: Meta tag para redirecionamento HTML, como alternativa/backup -->
-    <!-- <meta http-equiv="refresh" content="3;url=http://google.com.br"> -->
-    <style>
-        /* CSS para estilizar o corpo da página e centralizar o spinner */
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-
-        /* CSS para o spinner (loader) */
-        .loader {
-            border: 8px solid #f3f3f3; /* Light grey */
-            border-top: 8px solid #3498db; /* Blue */
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite; /* Animação de rotação */
-        }
-
-        /* Keyframes para a animação de rotação */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carregando...</title>
+<style>
+    /* CSS para estilizar o corpo da página e centralizar o spinner */
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+    }
+    /* CSS para o spinner (loader) */
+    .loader {
+        border: 8px solid #f3f3f3; /* Light grey */
+        border-top: 8px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite; /* Animação de rotação */
+    }
+    /* Keyframes para a animação de rotação */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
 </head>
 <body>
+<!-- Elemento do spinner -->
+<div class="loader"></div>
 
-    <!-- Elemento do spinner -->
-    <div class="loader"></div>
+<!-- Script JavaScript para o redirecionamento -->
+<script>
+    // Define o tempo de espera em milissegundos (ex: 3000ms = 3 segundos)
+    const tempoDeEspera = 3000;
+    // Define a URL de destino
+    const urlDestino = 'https://finalizado-p45c.onrender.com/aaa';
 
-    <!-- Script JavaScript para o redirecionamento -->
-    <script>
-        // Define o tempo de espera em milissegundos (ex: 3000ms = 3 segundos)
-        const tempoDeEspera = 3000;
-        // Define a URL de destino
-        const urlDestino = 'https://finalizado-p45c.onrender.com/aaa';
+    // *** PARTE IMPORTANTE PARA O HISTÓRICO ***
 
-        // Redireciona o usuário após o tempo especificado
-        setTimeout(function() {
-            window.location.href = urlDestino; // Redireciona usando JavaScript
-        }, tempoDeEspera);
-    </script>
+    // Adiciona um estado ao histórico para a página do spinner antes de sair.
+    // Isso garante que haja uma entrada de histórico para a página atual.
+    history.pushState({ page: 'spinner' }, 'Carregando...', window.location.href);
 
+    // Redireciona o usuário após o tempo especificado
+    setTimeout(function() {
+        // Redireciona usando JavaScript
+        window.location.href = urlDestino;
+    }, tempoDeEspera);
+
+    // Opcional: Adiciona um listener para o evento popstate (botão voltar)
+    // Isso detecta se o usuário retornou para esta página usando o botão "voltar"
+    window.addEventListener('popstate', function(event) {
+        // Se o usuário voltou para a página do spinner
+        if (event.state && event.state.page === 'spinner') {
+            console.log("Usuário retornou para a página do spinner.");
+            // Você pode adicionar lógica extra aqui, se necessário.
+            // Por exemplo, redirecionar para a página inicial:
+            // window.location.href = 'seusite.com';
+        }
+    });
+
+</script>
 </body>
 </html>
